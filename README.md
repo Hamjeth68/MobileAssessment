@@ -35,7 +35,7 @@ Optimized algorithm implementation with O(n) time complexity
 
 2. **Install dependencies**
    ```bash
-   npm install
+   yarn install
    ```
 
 3. **Install iOS dependencies** (iOS only)
@@ -45,19 +45,23 @@ Optimized algorithm implementation with O(n) time complexity
 
 4. **Start the Metro bundler**
    ```bash
-   npm start
+   yarn start
    ```
 
 5. **Run the application**
    
    **For Android:**
    ```bash
-   npm run android
+   expo run:android
    ```
    
    **For iOS:**
    ```bash
-   npm run ios
+   expo run:ios
+   ```
+
+   **For WEB:**
+   expo start --web
    ```
 
 ## 📁 Project Structure
@@ -172,7 +176,7 @@ AeonAssessment/
 
 **Metro bundler cache issues:**
 ```bash
-npm start -- --reset-cache
+yarn start -- --reset-cache
 ```
 
 **iOS build problems:**
