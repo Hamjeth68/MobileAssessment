@@ -61,6 +61,7 @@ Optimized algorithm implementation with O(n) time complexity
    ```
 
    **For WEB:**
+   ```bash
    expo start --web
    ```
 
