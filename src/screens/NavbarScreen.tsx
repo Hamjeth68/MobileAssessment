@@ -9,8 +9,7 @@ const NavbarScreen = () => {
         <Card.Content>
           <Title style={styles.title}>Responsive Navbar Demo</Title>
           <Paragraph style={styles.description}>
-            This page demonstrates the responsive navbar implementation. 
-            The navbar adapts to different screen sizes automatically.
+            This is a demonstration of a responsive navbar that adapts to both desktop and mobile views.
           </Paragraph>
         </Card.Content>
       </Card>
@@ -66,52 +65,7 @@ const NavbarScreen = () => {
         </Card.Content>
       </Card>
 
-      <Card style={styles.card}>
-        <Card.Content>
-          <Title style={styles.sectionTitle}>Technical Implementation</Title>
-          <View style={styles.chipContainer}>
-            <Chip style={styles.chip} icon="react">React Native</Chip>
-            <Chip style={styles.chip} icon="language-typescript">TypeScript</Chip>
-            <Chip style={styles.chip} icon="responsive">Responsive Design</Chip>
-            <Chip style={styles.chip} icon="state-machine">Context API</Chip>
-          </View>
-          
-          <Paragraph style={styles.techDescription}>
-            The navbar uses Dimensions API to detect screen size and 
-            automatically switches between desktop and mobile layouts. 
-            State management is handled through Context API for menu 
-            open/close states and search functionality.
-          </Paragraph>
-        </Card.Content>
-      </Card>
 
-      <Card style={styles.card}>
-        <Card.Content>
-          <Title style={styles.sectionTitle}>How to Test</Title>
-          <List.Section>
-            <List.Item
-              title="Mobile View"
-              description="Resize browser window or use mobile device"
-              left={props => <List.Icon {...props} icon="cellphone" />}
-            />
-            <List.Item
-              title="Menu Toggle"
-              description="Tap hamburger icon to open/close menu"
-              left={props => <List.Icon {...props} icon="gesture-tap" />}
-            />
-            <List.Item
-              title="Search Function"
-              description="Type in search box (UI only, no backend)"
-              left={props => <List.Icon {...props} icon="keyboard" />}
-            />
-            <List.Item
-              title="Navigation Items"
-              description="Click menu items (console logs navigation)"
-              left={props => <List.Icon {...props} icon="navigation" />}
-            />
-          </List.Section>
-        </Card.Content>
-      </Card>
     </ScrollView>
   );
 };

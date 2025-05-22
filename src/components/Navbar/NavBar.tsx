@@ -1,34 +1,60 @@
 import { useAppContext } from '@/context/AppContext';
-import { Route } from '@react-navigation/native';
-import { NativeStackNavigationOptions, NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React from 'react';
-import { View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import { Appbar, TextInput, Button, Menu, Divider, Text } from 'react-native-paper';
+import React, { useEffect, useRef } from 'react';
+import { View, StyleSheet, Dimensions, TouchableOpacity, Animated, Keyboard } from 'react-native';
+import { Appbar, TextInput, Text } from 'react-native-paper';
 
 const { width } = Dimensions.get('window');
 const isMobile = width < 768;
 
 interface NavbarProps {
-  back?: {
-    title: string | undefined;
-    href: string | undefined;
-  };
-  options: NativeStackNavigationOptions;
-  route: Route<string>;
-  navigation: NativeStackNavigationProp<any>;
   title?: string;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ title = 'AEON' }) => {
   const { state, dispatch } = useAppContext();
-  const { isMenuOpen, searchQuery } = state.navbar;
+  const { isMenuOpen, searchQuery, showSearch } = state.navbar;
+  const searchAnim = useRef(new Animated.Value(0)).current;
+  const searchInputRef = useRef<any>(null);
 
   const toggleMenu = () => {
     dispatch({ type: 'TOGGLE_MENU' });
   };
 
+  const toggleSearch = () => {
+    if (showSearch) {
+      // Close search
+      Animated.timing(searchAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: false,
+      }).start(() => {
+        dispatch({ type: 'TOGGLE_SEARCH' });
+        Keyboard.dismiss();
+      });
+    } else {
+      // Open search
+      dispatch({ type: 'TOGGLE_SEARCH' });
+      setTimeout(() => {
+        searchInputRef.current?.focus();
+        Animated.timing(searchAnim, {
+          toValue: 1,
+          duration: 200,
+          useNativeDriver: false,
+        }).start();
+      }, 10);
+    }
+  };
+
   const handleSearch = (text: string) => {
     dispatch({ type: 'SET_SEARCH_QUERY', value: text });
+  };
+
+  const handleSearchClose = () => {
+    if (searchQuery) {
+      dispatch({ type: 'SET_SEARCH_QUERY', value: '' });
+    } else {
+      toggleSearch();
+    }
   };
 
   const menuItems = [
@@ -43,30 +69,95 @@ const Navbar: React.FC<NavbarProps> = ({ title = 'AEON' }) => {
   const handleMenuItemPress = (item: string) => {
     console.log(`Navigating to ${item}`);
     if (isMobile) {
-      toggleMenu(); 
+      toggleMenu();
     }
+  };
+
+  // Animation styles
+  const searchContainerStyle = {
+    flex: searchAnim.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 1],
+    }),
+    opacity: searchAnim,
+    marginLeft: searchAnim.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 8],
+    }),
+  };
+
+  const titleStyle = {
+    opacity: searchAnim.interpolate({
+      inputRange: [0, 1],
+      outputRange: [1, 0],
+    }),
+    flex: searchAnim.interpolate({
+      inputRange: [0, 1],
+      outputRange: [1, 0],
+    }),
   };
 
   return (
     <View style={styles.container}>
       <Appbar.Header style={styles.header}>
         {isMobile ? (
-          <>
-            {/* Mobile Layout */}
-            <Appbar.Content title={title} titleStyle={styles.title} />
+          <View style={styles.mobileHeader}>
+            <Animated.View style={[styles.titleContainer, titleStyle]}>
+              <Appbar.Content 
+                title={title} 
+                titleStyle={styles.title}
+                style={styles.titleContent}
+              />
+            </Animated.View>
             
-            <Appbar.Action 
-              icon={isMenuOpen ? 'close' : 'menu'} 
-              onPress={toggleMenu}
-              iconColor="#fff"
-            />
+            <Animated.View style={[styles.searchContainer, searchContainerStyle]}>
+              <TextInput
+                ref={searchInputRef}
+                placeholder="Search..."
+                placeholderTextColor="#ffffffaa"
+                value={searchQuery}
+                onChangeText={handleSearch}
+                style={styles.mobileSearch}
+                mode="flat"
+                underlineColor="transparent"
+                right={
+                  <TextInput.Icon 
+                    icon={searchQuery ? "close" : "arrow-left"} 
+                    onPress={handleSearchClose}
+                    color="#fff"
+                  />
+                }
+                theme={{
+                  colors: {
+                    text: '#fff',
+                    placeholder: '#ffffffaa',
+                    primary: '#fff',
+                    background: 'transparent',
+                  }
+                }}
+              />
+            </Animated.View>
             
-          </>
+            <View style={styles.actionsContainer}>
+              {!showSearch && (
+                <Appbar.Action 
+                  icon="magnify" 
+                  onPress={toggleSearch}
+                  iconColor="#fff"
+                  style={styles.searchButton}
+                />
+              )}
+              
+              <Appbar.Action 
+                icon={isMenuOpen ? 'close' : 'menu'} 
+                onPress={toggleMenu}
+                iconColor="#fff"
+                style={styles.menuButton}
+              />
+            </View>
+          </View>
         ) : (
-          <>
-            {/* Desktop Layout */}
-   
-          </>
+          null
         )}
       </Appbar.Header>
 
@@ -89,15 +180,6 @@ const Navbar: React.FC<NavbarProps> = ({ title = 'AEON' }) => {
               <Text style={styles.mobileMenuItemText}>{item}</Text>
             </TouchableOpacity>
           ))}
-          
-          <TextInput
-            placeholder="Search..."
-            value={searchQuery}
-            onChangeText={handleSearch}
-            style={styles.mobileSearchInput}
-            mode="outlined"
-            right={<TextInput.Icon icon="magnify" />}
-          />
         </View>
       )}
     </View>
@@ -111,47 +193,54 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#6200ee',
     elevation: 4,
-    paddingHorizontal: 8,
+    paddingHorizontal: 0,
+  },
+  mobileHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 12,
+    minHeight: 56, // Ensure consistent header height
+  },
+  titleContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  titleContent: {
+    alignItems: 'center', // Center the title
+        paddingTop:20,
+      paddingRight: 22,
   },
   title: {
     color: '#fff',
     fontSize: 20,
     fontWeight: 'bold',
+    textAlign: 'center', // Center text alignment
   },
-  desktopContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingHorizontal: 16,
-  },
-  desktopTitle: {
-    color: '#fff',
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  navItems: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  navItem: {
-    marginHorizontal: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 4,
-  },
-  navItemText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  searchInput: {
-    width: 250,
+  searchContainer: {
     height: 40,
-    backgroundColor: 'white',
+    justifyContent: 'center',
+    flex: 1,
   },
-  searchInputContent: {
-    fontSize: 14,
+  mobileSearch: {
+    height: 40,
+    backgroundColor: 'transparent',
+    paddingHorizontal: 0,
+    marginLeft: 0,
+    color: '#fff',
+    includeFontPadding: false, // Better text alignment
+  },
+  actionsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 8,
+  },
+  menuButton: {
+    marginLeft: 8,
+  },
+  searchButton: {
+    marginLeft: 8,
   },
   mobileMenu: {
     backgroundColor: 'white',
@@ -190,10 +279,6 @@ const styles = StyleSheet.create({
   mobileMenuItemText: {
     fontSize: 16,
     color: '#333',
-  },
-  mobileSearchInput: {
-    marginTop: 16,
-    backgroundColor: 'white',
   },
 });
 
