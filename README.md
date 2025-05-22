@@ -139,22 +139,22 @@ AeonAssessment/
 ## App Screenshots
 
 ### Challenge 1: Calculator Screen
-![Calculator Screen](1000011595.jpg)
+![Calculator Screen](screenshots/1000011595.jpg)
 - Clean interface for adding two numbers
 - Real-time validation and error handling
 - Clear button to reset inputs
 
 ### Challenge 2: Responsive Navbar
-![Navbar Desktop](1000011596.jpg)
-![Navbar Mobile Features](1000011597.jpg)
+![Navbar Desktop](screenshots/1000011596.jpg)
+![Navbar Mobile Features](screenshots/1000011597.jpg)
 - Adaptive design for desktop and mobile
 - Hamburger menu for mobile view
 - Integrated search functionality
 - Smooth animations and transitions
 
 ### Challenge 3: Two Sum Algorithm
-![Two Sum Interface](1000011598.jpg)
-![Two Sum Results](1000011599.jpg)
+![Two Sum Interface](screenshots/1000011598.jpg)
+![Two Sum Results](screenshots/1000011599.jpg)
 - Input for array and target value
 - Visual test results with pass/fail indicators
 - Detailed algorithm information
