@@ -17,15 +17,15 @@
  * @param {number} target - The specific target sum to find.
  * @return {number[]} - An array containing the 1-indexed positions of the two numbers that sum to the target.
  */
-export const twoSum = (numbers: number[], target: number): number[] => {
+export const twoSumAlgorithm = (numbers: number[], target: number): number[] => {
   let left = 0;
   let right = numbers.length - 1;
 
   while (left < right) {
     const sum = numbers[left] + numbers[right];
-
+    
     if (sum === target) {
-      return [left + 1, right + 1];
+      return [left + 1, right + 1]; // Convert to 1-based indexing
     } else if (sum < target) {
       left++;
     } else {
@@ -33,8 +33,13 @@ export const twoSum = (numbers: number[], target: number): number[] => {
     }
   }
 
-  return []; // Fallback: theoretically unreachable as problem guarantees a solution.
+  return []; // Should never reach here per problem constraints
 };
+
+/**
+ * Runs test cases for twoSumAlgorithm
+ * @returns Array of test results
+ */
 
 export const runTwoSumTests = () => {
   const testCases = [
@@ -48,7 +53,7 @@ export const runTwoSumTests = () => {
   ];
 
   return testCases.map(testCase => {
-    const output = twoSum(testCase.input, testCase.target);
+    const output = twoSumAlgorithm(testCase.input, testCase.target);
     const isCorrect = JSON.stringify(output) === JSON.stringify(testCase.expected);
 
     return {
