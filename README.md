@@ -160,8 +160,14 @@ AeonAssessment/
 - Detailed algorithm information
 - Clear button to reset inputs
 
+## Live Demo
 
+Try the app directly in your browser with Expo Snack:
 
+<div data-snack-id="@hamjeth_rn/github.com-hamjeth68-mobileassessment" data-snack-platform="android" data-snack-preview="true" data-snack-theme="dark" style="overflow:hidden;background:#0C0D0E;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%"></div>
+<script async src="https://snack.expo.dev/embed.js"></script>
+ 
+ [![Open in Expo Snack](https://img.shields.io/badge/Open%20in-Expo%20Snack-blue.svg)](https://snack.expo.dev/@hamjeth_rn/github.com-hamjeth68-mobileassessment)
 
 ## 🚨 Troubleshooting
 
