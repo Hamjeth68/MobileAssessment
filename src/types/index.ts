@@ -1,3 +1,5 @@
+// src/types/index.ts
+
 export interface CalculatorState {
   firstNumber: string;
   secondNumber: string;
@@ -8,6 +10,7 @@ export interface CalculatorState {
 export interface NavbarState {
   isMenuOpen: boolean;
   searchQuery: string;
+  showSearch: boolean; // Added based on previous implementation
 }
 
 export interface TwoSumState {
@@ -30,13 +33,20 @@ export interface AppState {
   twoSum: TwoSumState;
 }
 
-export type ActionType =
+export type CalculatorAction =
   | { type: 'SET_CALCULATOR_INPUT'; field: 'firstNumber' | 'secondNumber'; value: string }
   | { type: 'CALCULATE_SUM' }
-  | { type: 'CLEAR_CALCULATOR' }
+  | { type: 'CLEAR_CALCULATOR' };
+
+export type NavbarAction =
   | { type: 'TOGGLE_MENU' }
   | { type: 'SET_SEARCH_QUERY'; value: string }
+  | { type: 'TOGGLE_SEARCH' };
+
+export type TwoSumAction =
   | { type: 'SET_TWO_SUM_INPUT'; field: 'inputArray' | 'targetValue'; value: string }
   | { type: 'CALCULATE_TWO_SUM' }
   | { type: 'CLEAR_TWO_SUM' }
   | { type: 'RUN_TWO_SUM_TESTS' };
+
+export type AppAction = CalculatorAction | NavbarAction | TwoSumAction;

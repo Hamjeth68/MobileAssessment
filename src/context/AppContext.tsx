@@ -211,6 +211,7 @@
 
 
 
+import { twoSumAlgorithm } from '@/utils/algorithms';
 import React, { createContext, useContext, useReducer, ReactNode } from 'react';
 
 // Types
@@ -277,25 +278,6 @@ const initialState: AppState = {
   },
 };
 
-// Two Sum Algorithm Implementation
-const twoSumAlgorithm = (numbers: number[], target: number): number[] => {
-  let left = 0;
-  let right = numbers.length - 1;
-  
-  while (left < right) {
-    const sum = numbers[left] + numbers[right];
-    
-    if (sum === target) {
-      return [left + 1, right + 1]; // Return 1-indexed positions
-    } else if (sum < target) {
-      left++;
-    } else {
-      right--;
-    }
-  }
-  
-  return []; // No solution found
-};
 
 const appReducer = (state: AppState, action: ActionType): AppState => {
   switch (action.type) {

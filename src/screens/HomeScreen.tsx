@@ -11,7 +11,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     {
       id: 'Calculator',
       title: 'Challenge 1: Calculator',
-      description: 'Create a React Native calculator that can add two numbers with input validation and error handling.',
+      description: 'User can test the first challenge of adding two numbers with a calculator.',
       icon: 'calculator',
       color: '#2196F3',
       route: 'Calculator'
@@ -19,7 +19,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     {
       id: 'Navbar',
       title: 'Challenge 2: Responsive Navbar',
-      description: 'Build a responsive navbar with hamburger menu for mobile and search functionality.',
+      description: 'User can test the responsive navbar Here.... Desktop view is provided separately.',
       icon: 'menu',
       color: '#4CAF50',
       route: 'Navbar'
@@ -27,7 +27,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     {
       id: 'TwoSum',
       title: 'Challenge 3: Two Sum Algorithm',
-      description: 'Implement the Two Sum II algorithm with UI, test cases, and performance optimization.',
+      description: 'User can test the Two Sum II algorithm Here.., With test cases.',
       icon: 'code-array',
       color: '#FF9800',
       route: 'TwoSum'
