@@ -1,4 +1,6 @@
 import { useAppContext } from '@/context/AppContext';
+import { Route } from '@react-navigation/native';
+import { NativeStackNavigationOptions, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useEffect, useRef } from 'react';
 import { View, StyleSheet, Dimensions, TouchableOpacity, Animated, Keyboard } from 'react-native';
 import { Appbar, TextInput, Text } from 'react-native-paper';
@@ -7,10 +9,17 @@ const { width } = Dimensions.get('window');
 const isMobile = width < 768;
 
 interface NavbarProps {
+  back?: {
+    title: string | undefined;
+    href: string | undefined;
+  };
+  options: NativeStackNavigationOptions;
+  route: Route<string>;
+  navigation: NativeStackNavigationProp<any>;
   title?: string;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ title = 'AEON' }) => {
+const Navbar: React.FC<NavbarProps> = (props) => {
   const { state, dispatch } = useAppContext();
   const { isMenuOpen, searchQuery, showSearch } = state.navbar;
   const searchAnim = useRef(new Animated.Value(0)).current;
@@ -104,7 +113,7 @@ const Navbar: React.FC<NavbarProps> = ({ title = 'AEON' }) => {
           <View style={styles.mobileHeader}>
             <Animated.View style={[styles.titleContainer, titleStyle]}>
               <Appbar.Content 
-                title={title} 
+                title={props.title || 'AEON'} 
                 titleStyle={styles.title}
                 style={styles.titleContent}
               />
@@ -208,9 +217,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleContent: {
-    alignItems: 'center', // Center the title
+    alignItems: 'flex-start', // Center the title
         paddingTop:20,
-      paddingRight: 22,
+      paddingRight: 35,
   },
   title: {
     color: '#fff',

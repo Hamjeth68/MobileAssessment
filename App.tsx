@@ -35,6 +35,7 @@ const App = () => {
           barStyle="light-content" 
           backgroundColor="#6200ee" 
           translucent={false}
+          
         />
         <NavigationContainer>
           <Stack.Navigator
