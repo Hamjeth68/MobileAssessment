@@ -5,18 +5,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AppContextProvider } from './src/context/AppContext';
 import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
 
-// Screens
 import HomeScreen from './src/screens/HomeScreen';
 import CalculatorScreen from './src/screens/CalculatorScreen';
 import NavbarScreen from './src/screens/NavbarScreen';
 import TwoSumScreen from './src/screens/TwoSumScreen';
 
-// Components
 import Navbar from '@/components/Navbar/NavBar';
 
 const Stack = createNativeStackNavigator();
 
-// Custom theme for React Native Paper
 const theme = {
   ...DefaultTheme,
   colors: {
@@ -43,7 +40,7 @@ const App = () => {
           <Stack.Navigator
             initialRouteName="Home"
             screenOptions={{
-              header: (props) => <Navbar {...props} />,
+              header: (props) => <Navbar  {...props}  />,
               headerShown: true,
             }}
           >

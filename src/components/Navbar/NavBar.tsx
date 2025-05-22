@@ -1,4 +1,6 @@
 import { useAppContext } from '@/context/AppContext';
+import { Route } from '@react-navigation/native';
+import { NativeStackNavigationOptions, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { Appbar, TextInput, Button, Menu, Divider, Text } from 'react-native-paper';
@@ -7,6 +9,13 @@ const { width } = Dimensions.get('window');
 const isMobile = width < 768;
 
 interface NavbarProps {
+  back?: {
+    title: string | undefined;
+    href: string | undefined;
+  };
+  options: NativeStackNavigationOptions;
+  route: Route<string>;
+  navigation: NativeStackNavigationProp<any>;
   title?: string;
 }
 
@@ -33,9 +42,8 @@ const Navbar: React.FC<NavbarProps> = ({ title = 'AEON' }) => {
 
   const handleMenuItemPress = (item: string) => {
     console.log(`Navigating to ${item}`);
-    // In a real app, you would navigate to the respective page
     if (isMobile) {
-      toggleMenu(); // Close menu on mobile after selection
+      toggleMenu(); 
     }
   };
 
@@ -46,40 +54,18 @@ const Navbar: React.FC<NavbarProps> = ({ title = 'AEON' }) => {
           <>
             {/* Mobile Layout */}
             <Appbar.Content title={title} titleStyle={styles.title} />
+            
             <Appbar.Action 
               icon={isMenuOpen ? 'close' : 'menu'} 
               onPress={toggleMenu}
               iconColor="#fff"
             />
+            
           </>
         ) : (
           <>
             {/* Desktop Layout */}
-            <View style={styles.desktopContainer}>
-              <Text style={styles.desktopTitle}>{title}</Text>
-              
-              <View style={styles.navItems}>
-                {menuItems.map(item => (
-                  <TouchableOpacity 
-                    key={item} 
-                    onPress={() => handleMenuItemPress(item)}
-                    style={styles.navItem}
-                  >
-                    <Text style={styles.navItemText}>{item}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-
-              <TextInput
-                placeholder="Search documentation..."
-                value={searchQuery}
-                onChangeText={handleSearch}
-                style={styles.searchInput}
-                mode="outlined"
-                right={<TextInput.Icon icon="magnify" />}
-                contentStyle={styles.searchInputContent}
-              />
-            </View>
+   
           </>
         )}
       </Appbar.Header>

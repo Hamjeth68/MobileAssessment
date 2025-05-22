@@ -38,9 +38,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     <ScrollView contentContainerStyle={styles.container}>
       <Card style={styles.headerCard}>
         <Card.Content>
-          <Title style={styles.mainTitle}>React Native Assessment</Title>
+          <Title style={styles.mainTitle}>Hi... Hamjeth here</Title>
           <Paragraph style={styles.subtitle}>
-            Complete mobile development challenges showcasing React Native expertise
+            Checkout the challenges I have completed. Click on any challenge to view the details.
           </Paragraph>
         </Card.Content>
       </Card>
@@ -75,29 +75,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         </Card>
       ))}
 
-      <Card style={styles.infoCard}>
-        <Card.Content>
-          <Title style={styles.infoTitle}>Technical Stack</Title>
-          <View style={styles.techStack}>
-            <View style={styles.techItem}>
-              <Avatar.Icon size={32} icon="react" style={styles.techIcon} />
-              <Paragraph style={styles.techText}>React Native</Paragraph>
-            </View>
-            <View style={styles.techItem}>
-              <Avatar.Icon size={32} icon="language-typescript" style={styles.techIcon} />
-              <Paragraph style={styles.techText}>TypeScript</Paragraph>
-            </View>
-            <View style={styles.techItem}>
-              <Avatar.Icon size={32} icon="state-machine" style={styles.techIcon} />
-              <Paragraph style={styles.techText}>Context API</Paragraph>
-            </View>
-            <View style={styles.techItem}>
-              <Avatar.Icon size={32} icon="material-design" style={styles.techIcon} />
-              <Paragraph style={styles.techText}>Material Design</Paragraph>
-            </View>
-          </View>
-        </Card.Content>
-      </Card>
+     
     </ScrollView>
   );
 };
